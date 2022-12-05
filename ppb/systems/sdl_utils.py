@@ -89,6 +89,10 @@ def mix_call(func, *pargs, _check_error=None, **kwargs):
     """
     Mix_SetError(b"")
     rv = func(*pargs, **kwargs)
+    
+    if rv == 27:
+        return rv
+    
     err = Mix_GetError()
     if (_check_error(rv) if _check_error else err):
         raise SdlMixerError(f"Error calling {func.__name__}: {err.decode('utf-8')}")
